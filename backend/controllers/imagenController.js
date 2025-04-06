@@ -1,21 +1,25 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const { ImagenProducto } = require('../models');
 const { validationResult } = require('express-validator');
-const AWS = require('aws-sdk');
+const { S3Client } = require('@aws-sdk/client-s3');
+const { Upload } = require('@aws-sdk/lib-storage');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const uuid = require('uuid').v4;
 
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+const s3Client = new S3Client({
   region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
 });
-
-const s3 = new AWS.S3();
 
 const upload = multer({
   storage: multerS3({
-    s3,
+    s3: s3Client,
     bucket: process.env.AWS_BUCKET_NAME,
     acl: 'public-read',
     metadata: (req, file, cb) => {
@@ -62,7 +66,7 @@ exports.eliminarImagen = async (req, res) => {
       Key: imagen.url.split('/').pop(),
     };
 
-    await s3.deleteObject(params).promise();
+    await s3Client.send(new DeleteObjectCommand(params));
     await imagen.destroy();
     res.status(200).json({ msg: 'Imagen eliminada correctamente' });
   } catch (error) {

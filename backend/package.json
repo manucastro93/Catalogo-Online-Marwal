@@ -1,9 +1,12 @@
 {
   "scripts": {
     "test": "mocha tests/pruebas.js",
-    "start": "node src/index.js"
+    "start": "node ./app.js"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.782.0",
+    "@aws-sdk/config-resolver": "^3.370.0",
+    "@aws-sdk/lib-storage": "^3.782.0",
     "@sentry/node": "^9.11.0",
     "aws-sdk": "^2.1692.0",
     "axios": "^1.8.4",
