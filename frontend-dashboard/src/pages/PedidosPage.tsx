@@ -3,7 +3,7 @@ import PedidosList from '../components/Pedidos/PedidosList';
 
 const PedidosPage: Component = () => {
   return (
-    <div>
+    <div class='content'>
       <h1>Pedidos</h1>
       <PedidosList />
     </div>

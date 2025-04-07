@@ -16,7 +16,7 @@ const InicioPage: Component = () => {
   };
 
   return (
-    <div>
+    <div class='content'>
       <h1>Página de Inicio</h1>
       <button onClick={handleLogout}>Cerrar Sesión</button>
     </div>

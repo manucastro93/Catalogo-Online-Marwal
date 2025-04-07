@@ -3,7 +3,7 @@ import { NavLink } from '@solidjs/router';
 
 const Sidebar: Component = () => {
   return (
-    <aside>
+    <aside class='sidebar'>
       <nav>
         <ul>
           <li><NavLink href="/dashboard/productos">Productos</NavLink></li>

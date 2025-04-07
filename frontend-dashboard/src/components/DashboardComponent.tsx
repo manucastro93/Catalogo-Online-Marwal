@@ -4,7 +4,6 @@ import Header from './Layout/Header';
 import { Outlet } from '@solidjs/router';
 
 const DashboardComponent: Component = () => {
-  console.log('DashboardComponent');
   return (
     <div>
       <Header />

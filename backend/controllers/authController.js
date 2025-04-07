@@ -16,8 +16,7 @@ exports.loginUsuario = async (req, res) => {
     if (!esContraseñaValida) {
       return res.status(401).json({ msg: 'Contraseña incorrecta' });
     }
-
-    const token = jwt.sign({ id: usuario.id, rol: usuario.rol }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: esUsuarioValido.id, rol: esUsuarioValido.rol }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
     res.status(200).json({ token });
@@ -35,20 +34,12 @@ exports.logoutUsuario = (req, res) => {
 // Función para obtener la información del usuario conectado
 exports.obtenerUsuarioConectado = async (req, res) => {
   try {
-    console.log('Obteniendo usuario conectado');
-    const authorizationHeader = req.headers.authorization;
-    if (!authorizationHeader) {
-      return res.status(401).json({ error: 'No token provided' });
-    }
-    const token = authorizationHeader.split(' ')[1];
+    const usuario = req.usuario;
     try {
-      const decoded = jwt.verify(token, config.jwtSecret);
-      const user = await Usuario.findByPk(decoded.usuario, { attributes: { exclude: ['contraseña'] } });
-
+      const user = await Usuario.findByPk(usuario.id, { attributes: { exclude: ['contraseña'] } });
       if (!user) {
         return res.status(404).json({ error: 'Usuario no encontrado' });
       }
-
       res.json(user);
     } catch (err) {
       return res.status(401).json({ error: 'Token inválido' });

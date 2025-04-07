@@ -4,6 +4,7 @@ import { Producto } from '../interfaces/Producto';
 export const productoService = {
   obtenerProductos: async () => {
     const response = await api.get('/productos');
+    console.log('Response:', response);
     return response.data;
   },
   obtenerProductoPorId: async (id: string) => {

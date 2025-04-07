@@ -28,13 +28,13 @@ router.use(limitarSolicitudes);
 
 // Rutas para el usuarioController
 router.post('/usuarios', validarToken, validarRol(['administrador', 'supremo']), validarUsuario, usuarioController.crearUsuario);
+router.get('/usuarios/me', validarToken, authController.obtenerUsuarioConectado);
 router.put('/usuarios/:id', validarToken, validarRol(['administrador', 'supremo']), validarUsuario, usuarioController.editarUsuario);
 router.delete('/usuarios/:id', validarToken, validarRol(['administrador', 'supremo']), usuarioController.eliminarUsuario);
 router.get('/usuarios', validarToken, validarRol(['administrador', 'supremo']), usuarioController.buscarUsuarios);
 router.get('/usuarios/:id', validarToken, validarRol(['administrador', 'supremo']), usuarioController.buscarUsuarioPorId);
 router.post('/login', authController.loginUsuario);
 router.post('/logout', validarToken, authController.logoutUsuario);
-router.get('usuarios/me', validarToken, authController.obtenerUsuarioConectado);
 
 // Rutas para el categoriaController
 router.post('/categorias', validarToken, validarRol(['administrador', 'supremo']), validarCategoria, categoriaController.crearCategoria);

@@ -4,7 +4,6 @@ import { useAuth } from '../contexts/authContext';
 
 const ProtectedRoute: Component<{ children: JSX.Element }> = (props) => {
   const auth = useAuth();
-  console.log(auth.isAuthenticated, 'ProtectedRoute');
   if (auth.isAuthenticated) {
     return props.children;
   } else {

@@ -3,7 +3,7 @@ import BannersList from '../components/Pagina/BannersList';
 
 const PaginaPage: Component = () => {
   return (
-    <div>
+    <div class='content'>
       <h1>Administrar Banners y Logo</h1>
       <BannersList />
     </div>

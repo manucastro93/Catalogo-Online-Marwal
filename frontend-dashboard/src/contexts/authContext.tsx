@@ -1,6 +1,5 @@
 import { createContext, useContext, createSignal, Component, JSX, onCleanup, onMount } from 'solid-js';
 import { authService } from '../services/authService';
-import { usuarioService } from '../services/usuarioService';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
@@ -17,7 +16,6 @@ export const AuthProvider: Component<{ children: JSX.Element }> = (props) => {
   const login = async (usuario: string, contrasena: string) => {
     try {
       await authService.login(usuario, contrasena).then(response => {
-        console.log(response.token);
         localStorage.setItem('token',response.token);
         localStorage.setItem('isAuthenticated','true');
         setIsAuthenticated(true);
@@ -42,7 +40,6 @@ export const AuthProvider: Component<{ children: JSX.Element }> = (props) => {
 
   const checkAuth = async () => {
     try {
-      //await usuarioService.obtenerUsuarioConectado();
       setIsAuthenticated(true);
     } catch (error) {
       setIsAuthenticated(false);

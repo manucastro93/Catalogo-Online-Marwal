@@ -3,7 +3,7 @@ import UsuariosList from '../components/Usuarios/UsuariosList';
 
 const UsuariosPage: Component = () => {
   return (
-    <div>
+    <div class='content'>
       <h1>Usuarios</h1>
       <UsuariosList />
     </div>

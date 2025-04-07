@@ -18,8 +18,8 @@ app.use(cors({
     } else {
       callback(new Error('Not allowed by CORS'));
     }
-  }, // Reemplaza con el origen de tu frontend
-  credentials: true // Permitir que las cookies se envíen a través de CORS
+  },
+  credentials: true
 }));
 
 app.use(express.json());

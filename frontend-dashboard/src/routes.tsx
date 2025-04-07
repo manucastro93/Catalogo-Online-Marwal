@@ -15,6 +15,7 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/login" component={LoginPage} />
+      <Route path="/" component={LoginPage} />
       <Route path="/admin" component={LoginPage} />
       <Route path="/dashboard" element={<ProtectedRoute><DashboardComponent /></ProtectedRoute>}>
         <Route path="/inicio" element={<InicioPage />} />
