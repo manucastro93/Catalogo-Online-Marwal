@@ -14,7 +14,7 @@ const LoginPage: Component = () => {
         try {
             await login(username(), password());
             setErrorMessage(''); // Clear error message on successful login
-            navigate('/inicio'); // Redirigir a la página de inicio después del login exitoso
+            navigate('/dashboard/inicio'); // Redirigir a la página de inicio después del login exitoso
         } catch (error) {
             console.error('Login failed:', error);
             setErrorMessage('Credenciales incorrectas, por favor intente nuevamente.');

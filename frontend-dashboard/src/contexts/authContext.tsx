@@ -40,7 +40,6 @@ export const AuthProvider: Component<{ children: JSX.Element }> = (props) => {
     }
   };
 
-
   const checkAuth = async () => {
     try {
       //await usuarioService.obtenerUsuarioConectado();
@@ -49,10 +48,8 @@ export const AuthProvider: Component<{ children: JSX.Element }> = (props) => {
       setIsAuthenticated(false);
     }
   };
-
   // Check authentication status on mount
     checkAuth();
-
   return (
     <AuthContext.Provider value={{ isAuthenticated: isAuthenticated(), login, logout, checkAuth  }}>
       {props.children}

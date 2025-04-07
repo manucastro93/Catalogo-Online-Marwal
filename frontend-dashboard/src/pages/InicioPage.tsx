@@ -15,7 +15,6 @@ const InicioPage: Component = () => {
     }
   };
 
-  console.log('InicioPage: Rendering InicioPage');
   return (
     <div>
       <h1>Página de Inicio</h1>
