@@ -1,15 +1,15 @@
 import { Component } from 'solid-js';
-import { Routes, Route } from '@solidjs/router';
-import LoginPage from './pages/LoginPage';
-import Dashboard from './components/Dashboard';
+import { Router } from '@solidjs/router';
+import { AuthProvider } from './contexts/authContext'; // Cambiado a 'AuthContext'
+import AppRoutes from './routes';
 
 const App: Component = () => {
   return (
-    <Routes>
-      <Route path="/login" component={LoginPage} />
-      <Route path="/dashboard" component={Dashboard} />
-      {/* Agrega más rutas según sea necesario */}
-    </Routes>
+    <AuthProvider>
+      <Router>
+        <AppRoutes />
+      </Router>
+    </AuthProvider>
   );
 };
 

@@ -11,6 +11,7 @@ const pedidoController = require('../controllers/pedidoController');
 const productoController = require('../controllers/productoController');
 const vendedorController = require('../controllers/vendedorController');
 const administradorController = require('../controllers/administradorController');
+const authController = require('../controllers/authController');
 const logController = require('../controllers/logController');
 const notificacionController = require('../controllers/notificacionController');
 
@@ -31,9 +32,9 @@ router.put('/usuarios/:id', validarToken, validarRol(['administrador', 'supremo'
 router.delete('/usuarios/:id', validarToken, validarRol(['administrador', 'supremo']), usuarioController.eliminarUsuario);
 router.get('/usuarios', validarToken, validarRol(['administrador', 'supremo']), usuarioController.buscarUsuarios);
 router.get('/usuarios/:id', validarToken, validarRol(['administrador', 'supremo']), usuarioController.buscarUsuarioPorId);
-router.post('/login', usuarioController.loginUsuario);
-router.post('/logout', validarToken, usuarioController.logoutUsuario);
-router.get('/me', validarToken, usuarioController.obtenerUsuarioConectado);
+router.post('/login', authController.loginUsuario);
+router.post('/logout', validarToken, authController.logoutUsuario);
+router.get('usuarios/me', validarToken, authController.obtenerUsuarioConectado);
 
 // Rutas para el categoriaController
 router.post('/categorias', validarToken, validarRol(['administrador', 'supremo']), validarCategoria, categoriaController.crearCategoria);

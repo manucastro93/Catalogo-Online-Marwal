@@ -1,50 +1,47 @@
-import { createSignal } from 'solid-js';
-import { usuarioService } from '../services/usuarioService';
+import { createSignal, Component } from 'solid-js';
+import { useNavigate } from '@solidjs/router';
+import { useAuth } from '../contexts/authContext';
+import '../styles/Login.css'; // Asegúrate de que la ruta sea correcta
 
-const LoginPage = () => {
-  const [nombreUsuario, setNombreUsuario] = createSignal('');
-  const [contrasena, setContrasena] = createSignal('');
+const LoginPage: Component = () => {
+    const [username, setUsername] = createSignal('');
+    const [password, setPassword] = createSignal('');
+    const [errorMessage, setErrorMessage] = createSignal('');
+    const navigate = useNavigate();
+    const { login } = useAuth();
 
-  const handleSubmit = async (event: Event) => {
-    event.preventDefault();
-    try {
-      const data = await usuarioService.login(nombreUsuario(), contrasena());
-      console.log('Login exitoso:', data);
-    } catch (error) {
-      console.error('Error en el login:', error);
-    }
-  };
+    const handleLogin = async () => {
+        try {
+            await login(username(), password());
+            setErrorMessage(''); // Clear error message on successful login
+            navigate('/inicio'); // Redirigir a la página de inicio después del login exitoso
+        } catch (error) {
+            console.error('Login failed:', error);
+            setErrorMessage('Credenciales incorrectas, por favor intente nuevamente.');
+        }
+    };
 
-  return (
-    <div class="container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div class="mb-3">
-          <label for="nombreUsuario" class="form-label">Usuario</label>
-          <input
-            type="text"
-            class="form-control"
-            id="nombreUsuario"
-            value={nombreUsuario()}
-            onInput={(e) => setNombreUsuario(e.currentTarget.value)}
-            required
-          />
+    return (
+        <div class="login-container">
+            <h1 class="login-title">Iniciar Sesión</h1>
+            {errorMessage() && <div class="error-message">{errorMessage()}</div>}
+            <input
+                type="text"
+                class="login-input"
+                placeholder="Nombre de usuario"
+                value={username()}
+                onInput={(e) => setUsername(e.currentTarget.value)}
+            />
+            <input
+                type="password"
+                class="login-input"
+                placeholder="Contraseña"
+                value={password()}
+                onInput={(e) => setPassword(e.currentTarget.value)}
+            />
+            <button class="login-button" onClick={handleLogin}>Iniciar sesión</button>
         </div>
-        <div class="mb-3">
-          <label for="contrasena" class="form-label">Contraseña</label>
-          <input
-            type="password"
-            class="form-control"
-            id="contrasena"
-            value={contrasena()}
-            onInput={(e) => setContrasena(e.currentTarget.value)}
-            required
-          />
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-      </form>
-    </div>
-  );
+    );
 };
 
 export default LoginPage;

@@ -3,11 +3,10 @@ const rateLimit = require('express-rate-limit');
 
 // Middleware para validar el token JWT
 exports.validarToken = (req, res, next) => {
-  const token = req.header('x-auth-token');
+  const token = req.body.headers.Authorization.split(' ')[1]; // Extrae el token JWT
   if (!token) {
     return res.status(401).json({ msg: 'No hay token, permiso no válido' });
   }
-
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.usuario = decoded;
